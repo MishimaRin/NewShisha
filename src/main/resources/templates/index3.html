@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>HOME</title>
+<meta http-equiv="Content-Type"
+content="text/html; charset=UTF-8"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<link href="css/special.css" rel = "stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="/js/special.js"></script>
+<style type="text/css">
+a {color:primary;}
+body {
+	background: linear-gradient(to right, #2af598 0%, #009efd 100%);
+	background-repeat:  no-repeat;                         /* 画像の繰り返しを指定  */              
+    background-position:center center;                     /* 画像の表示位置を指定  */
+    background-size:contain;                               /* 画像のサイズを指定    */
+    width:100%;                                            /* 横幅のサイズを指定    */
+    height:100%;   
+	}
+</style>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+  	<ul class="header-nav-list">
+    	<li class="header-nav-item" id = "toggle">
+    	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      	<span class="navbar-toggler-icon"></span>
+    	</button> 
+    <ul class="toggle-list">
+         <li><a href="/men">FLAVOR</a></li>
+         <li><a href="/menMix">MIXFLAVOR</a></li>
+         <li><a href="/logout">logout</a></li>
+         <li><a href="/change">会員情報変更</a></li>
+    </ul>
+    	</li>
+    </ul>
+  </div>
+</nav>
+
+
+
+<div class="mx-auto text-center">
+<br><br><br>
+<h1 class="text-center mb-3">HOME SHISHA</h1>
+<h3 class="mb-3" style="text-align: center">ようこそ<h3 th:text="${loginUser.name}"/>さん</h3>
+<!--  <p th:text ="${loginUser.cart.total())}"/></p>-->
+<h4 class="text-center mb-3">メニュー選択</h4>
+<h6 class="mb-3" style="text-align: center">このサイトでは気軽にフレーバーを購入でき、オリジナルのフレーバーを共有できるサイトです。</h6>
+<br>
+
+</div>
+
+
+
+    <div class="hero">
+        <video class="hero__video" src="images/video.mp4" loop muted autoplay></video>
+        <a class="modal-open js-modal-open" href="" data-target="modal01">動画を見る</a><br>
+    </div>
+    
+    <div id="modal01" class="modal js-modal">
+        <div class="modal__bg js-modal-close"></div>
+        <div class="modal__content">
+            <video class="hero__video" src="img/video.mp4" loop muted autoplay></video>
+            <a class="js-modal-close" href="">閉じる</a>
+        </div><!--modal__inner-->
+    </div><!--modal-->
+
+
+  </body>
+</html>

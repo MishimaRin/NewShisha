@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>top page</title>
+<meta http-equiv="Content-Type"
+content="text/html; charset=UTF-8"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<style>
+h1{font-size:18pt; font-weight:bold; color:gray;}
+body{font-size:13pt; color:gray; margin:5px 25px;}
+tr{margin:5px;}
+th{padding:5px; color:white; background:darkgray;}
+td{padding:5px; color:black; background:#f0f0f0;}
+.err{color:red;}
+</style>
+
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/Shisha/kussyon7">TOP</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+    <li class="nav-item">
+    <button type="button" onclick=history.back()>戻る</button>
+     </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/Shisha/Kussyon">系統選択</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/Shisha/Logout">ログアウト</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/Shisha/NewServlet">新規会員登録</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/Shisha/History">購入履歴</a>
+      </li>
+      
+    </ul>
+  </div>
+</nav>
+<div class="mx-auto text-center" style="width: 70%;">
+	<h2 class="text-center mb-3">会員登録情報変更画面</h2>
+
+のちにパスワードをつけてこの画面
+再度ログインをさせるようにリダイレクト
+
+<form method="post" action="/makeUser">
+<table class="table table-striped">
+
+
+<tr><td><label for="name">ユーザー名</label></td>
+<td><input type = "text" name = "name" th:value="${loginUser.name}"required/>
+</td></tr>
+<tr><td><label for="pass">パスワード</label></td>
+<td><input type = "text" name = "pass" th:value  = "${loginUser.pass}" required/>
+</td></tr>
+<tr><td><label for="job">職業</label></td>
+<td><input type = "text" name = "job" th:value  = "${loginUser.job}"/>
+</td></tr>
+<tr><td><label for="mail">メールアドレス</label></td>
+<td><input type = "email" name = "mail" th:value  = "${loginUser.mail}"/>
+</td></tr>
+<tr><td>利用区分</td>
+<td>
+<select id = "select1" name = "type" size = "1">
+<option value = "客">客</option>
+<option value = "店">店</option>
+</select>
+</td></tr>
+<tr><td>好きなジャンル</td>
+<td>
+<select id = "select2" name = "favorite" size = "1">
+<option value = "カクテル">カクテル</option>
+<option value = "スパイス">スパイス</option>
+<option value = "フルーツ">フルーツ</option>
+</select>
+
+</td></tr>
+<tr><td><p>form内での変更も可能です(利用区分、ジャンルを除く) ***最終チェックポイントです***</td></tr>
+<tr><td><input type = "submit" value = "確定"/></td></tr>
+</table>
+</form>
+
+<hr/>
+
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>新規レシピ作成</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<link href="css/especial.css" rel = "stylesheet">
+<link href="css/mention.css" rel = "stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="/js/hover.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/Shisha/kussyon7">TOP</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+    <li class="nav-item">
+    <button type="button" onclick=history.back()>戻る</button>
+     </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/Shisha/Kussyon">系統選択</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/Shisha/Logout">ログアウト</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/Shisha/NewServlet">新規会員登録</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/Shisha/History">購入履歴</a>
+      </li>
+      
+    </ul>
+  </div>
+</nav>
+	
+	
+	<form action="/check" method="post">
+	<button type="submit" class="btn btn-primary">カートにいれる</button>
+	
+	<table class="mention-list2" id="mention-list2">	
+  		
+	</table>
+	
+	<table class="table table-striped">
+		<thead>
+			 <tr>
+			 	<th scope="col">No.</th>
+			 	<th scope="col">ジャンル</th>
+			 	<th scope="col">ミックスフレーバー名</th>
+			 	<th scope="col">構成フレーバー名</th>
+			 	<th scope="col">金額</th>
+			 	<th scope="col">作成者</th>
+			 	<th scope="col">数量</th>
+			 	<th scope="col"></th>
+			 </tr>
+		</thead>
+		 
+		<tbody>
+		<tr th:each="obj : ${datalist}">
+		
+			 	<td><input type="checkbox" id= "ko" name="checkbox" th:value="${obj.id}">カートへ [[${obj.id}]]</td>
+			 	<td>[[${obj.genre}]]</td>
+			 	<!--<td><a href="/home?id=${obj.name}">[[${obj.name}]]</a></td>-->
+			 	<td><a th:href="@{/home(id=${obj.id})}">[[${obj.name}]]</a></td>
+			 	<td class="l" th:data-id="${obj.id}">[[${obj.cons}]]</td>
+			 	<td>[[${obj.value}]]</td>
+			 	<td>[[${obj.serve}]]</td>
+			 	<td><a th:text="${buy}"></a></td>
+			 	
+			 	
+			 </tr>
+			
+		</tbody>
+	</table>
+	</form>
+	<a th:text="${buy}"></a>
+</body>
+</html>

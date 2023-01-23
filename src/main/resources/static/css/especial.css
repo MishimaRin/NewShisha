@@ -1,0 +1,18 @@
+.koi {
+	text-align:center;
+  	padding:20px 0;
+  	
+  	width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle 200px at center,
+    #57f6fe 0%,
+    #30c7ec 50%,
+    #46aef7 100%
+  );
+ }
+ 
+ .jojo {
+	font-size: 20px;    /* 文字サイズ指定 */
+    color: #2196F3;     /* 文字色指定 */
+}

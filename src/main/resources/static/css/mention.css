@@ -1,0 +1,86 @@
+
+
+#koko { 
+ position: relative;
+}
+
+.mention-list { 
+ width: 210px; 
+ border: 1px solid #a3a0a0; 
+ position: absolute; 
+ top: 180px;
+ left: 10px;
+ background-color: #f8f9fa;
+} 
+
+.mention-list2 { 
+ width: 420px; 
+ border: 1px solid #a3a0a0; 
+ position: absolute; 
+ top: 75px;
+ left: 700px;
+ background-color: #f8f9fa;
+} 
+
+#exp { 
+ width: 720px;  
+ position: absolute; 
+ top: 180px;
+ left: 340px;
+ height: 80px;
+ background-color: #fafafa;
+} 
+
+.write { 
+ width: 800px; 
+ height: 70%;
+ border: 1px solid #a3a0a0; 
+ position: absolute; 
+ top: 290px;
+ left: 280px;
+ background-color: #fafafa;
+} 
+
+ul li a { 
+ display: block;
+ color: #333;
+ padding: 1px 0; 
+} 
+
+#toggle { 
+ position: relative;
+}
+
+.toggle-list { 
+ display: none;
+ width: 150px; 
+ border: 1px solid #a3a0a0; 
+ position: absolute; 
+ top: 60px;
+ left: 0;
+ background-color: #f8f9fa;
+} 
+
+.header-nav-list {
+ display: flex; 
+} 
+
+.header-nav-item:not(:first-child) {
+ margin-left: 30px; 
+}
+
+.review-list { 
+ display: none;
+ width: 200px; 
+ border: 1px solid #a3a0a0; 
+ position: absolute; 
+ top: 100px;
+ left: 10px;
+ background-color: #f8f9fa;
+} 
+
+.review-table{
+width: 800px;
+border: 1px solid #a3a0a0;
+font-size:18pt; font-weight:bold; color:blue;
+}
