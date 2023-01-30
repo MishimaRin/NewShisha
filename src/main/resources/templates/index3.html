@@ -32,14 +32,14 @@ body {
          <li><a href="/men">FLAVOR</a></li>
          <li><a href="/menMix">MIXFLAVOR</a></li>
          <li><a href="/logout">logout</a></li>
-         <li><a href="/change">会員情報変更</a></li>
+         <li><a href="/changeUser">会員情報変更</a></li>
     </ul>
     	</li>
     </ul>
   </div>
 </nav>
 
-
+<p th:text="${T(java.lang.String).format('%,d',loginUser.id)}"></p>
 
 <div class="mx-auto text-center">
 <br><br><br>

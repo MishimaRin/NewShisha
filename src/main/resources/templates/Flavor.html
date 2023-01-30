@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>詳細検索画面</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<link href="css/makeMixFlavorBox.css" rel = "stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="/js/scroll.js"></script>
 
@@ -11,85 +12,111 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/Shisha/kussyon7">TOP</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-    <li class="nav-item">
-    <button type="button" onclick=history.back()>戻る</button>
-     </li>
-     
-      <li class="nav-item">
-        <a class="nav-link" href="/logout">ログアウト</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/makeUser">新規会員登録</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/changeUser">会員情報変更</a>
-      </li>
-      
-    </ul>
-  </div>
-  </nav>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  		<a class="navbar-brand" href="/Shisha/kussyon7">TOP</a>
+  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    	<span class="navbar-toggler-icon"></span>
+  		</button>
+  	<div class="collapse navbar-collapse" id="navbarNav">
+    	<ul class="navbar-nav">
+    		<li class="nav-item">
+    			<button type="button" onclick=history.back()>戻る</button>
+     		</li>
+     		<li class="nav-item">
+        		<a class="nav-link" href="/logout">ログアウト</a>
+      		</li>
+      		<li class="nav-item">
+        		<a class="nav-link" href="/makeUser">新規会員登録</a>
+      		</li>
+      		<li class="nav-item">
+        		<a class="nav-link" href="/changeUser">会員情報変更</a>
+      		</li> 
+    	</ul>
+  	</div>
+  	</nav>
 
-<p th:text="${msg}"></p>
-
-<div class="mx-auto text-center bg-success" style="width: 100%;">
-<form id = "form1" method="post" action ="/Flavor">
-	<select id = "sel" name = "select1" size = "1">
-	<option value = "カクテル"  th:selected="${'カクテル' == select1}">カクテル系</option>
-	<option value = "フルーツ"  th:selected="${'フルーツ' == select1}">フルーツ系</option>
-	<option value = "スパイス"  th:selected="${'スパイス' == select1}">スパイス系</option>
-	</select>
+	<p th:text="${msg}"></p>
+	<div class="mx-auto text-center bg-success" style="width: 100%;">
+		<form id = "form1" method="post" action ="/Flavor">
+			<select id = "sel" name = "select1" size = "1">
+				<option value = "カクテル"  th:selected="${'カクテル' == select1}">カクテル系</option>
+				<option value = "フルーツ"  th:selected="${'フルーツ' == select1}">フルーツ系</option>
+				<option value = "スパイス"  th:selected="${'スパイス' == select1}">スパイス系</option>
+			</select>
 	<br>
-	<select id = "sel2" name = "sort" size = "1">
-	<option value = "1" th:selected="${1 == sort}">安い順</option>
-	<option value = "2" th:selected="${2 == sort}">高い順</option>
-	<option value = "3" th:selected="${3 == sort}"></option>
-	</select>
-</form>
-	
-	
-	<form method="post" action ="/made">
+			<select id = "sel2" name = "sort" size = "1">
+				<option value = "1" th:selected="${1 == sort}">安い順</option>
+				<option value = "2" th:selected="${2 == sort}">高い順</option>
+				<option value = "3" th:selected="${3 == sort}"></option>
+			</select>
+		</form>
+	<input type="button" id="bc">ボタン
+		<form id ="form" method="post">
 	<br>
-	
-	<input type="submit" value="ミックスフレーバー作成画面へ">
+			<input type="button" id="for" name="submit" value="send" />
+			<!--  <input type="submit"  value="ミックスフレーバー作成画面へ">-->
 	<br><br>
-
-			
-<tr th:each="obj : ${datalist}">	
-<div id ="b"></div>  
-	<div class="card mb-3" style="max-width: 1080px;">
-  		<div class="row g-0">
-    		<div class="col-md-4">
-      			<img th:src="@{/img/{id}.jpg(id=${obj.id})}"height="150px"width="200px">
-    		</div>
-   		<div class="col-md-8">
-        	<div class="samplej" id="scre" >
-      							
-       			 <h3 class="card-title"><input type="checkbox" name="checkbox" th:value="${obj.id}"><td>[[${obj.name}]]</td></h3>
-       			 <h6 class="card-title">ジャンル : <td>[[${obj.genre}]]</td></h6>
-        		 <h6 class="card-title">  価格   : <td>[[${obj.value}]]</td>円(税込み)</h6>  
-        		 <h6 class="card-title"> 説明 : <td th:text="${obj.exp}"></h6>
-       			 <p class="card-text"><small class="text-muted">made for : <td th:text="${obj.maker}"></small></p>
-      		</div>
-    	</div>
-   	 </div>
+			<tr th:each="obj : ${datalist}">	
+				<div id ="b">
+				</div>  
+					<div class="card mb-3" style="max-width: 1080px;">
+  						<div class="row g-0">
+    						<div class="col-md-4">
+      							<img th:src="@{/img/{id}.jpg(id=${obj.id})}"height="150px"width="200px">
+    						</div>
+   						<div class="col-md-8">
+        					<div class="samplej" id="scre" >
+      		    				<h3 class="card-title"><input type="checkbox" name="checkbox" class="l" th:value="${obj.id}"><td>[[${obj.name}]]</td></h3>
+       		    				<h6 class="card-title">ジャンル : <td>[[${obj.genre}]]</td></h6>
+        	    				<h6 class="card-title">  価格   : <td><p th:text="${T(java.lang.String).format('%,d',obj.value) + '円'}"></p></td> </h6> 
+        	    				<h6 class="card-title"> 説明 : <td th:text="${obj.exp}"></h6>
+       		    				<p class="card-text"><small class="text-muted">made for : <td th:text="${obj.maker}"></small></p>
+      						</div>
+    					</div>
+   	 					</div>
+					</div>
+			</tr>	
+      	</form>
+	<div id = "name">
 	</div>
-</tr>		
+    </div>
 
-	 
-      </form>
-
-
-
-<div id = "name"></div>
-      
-</div>
-  
+	 <!--  <div class="makemake">
+ 		 <div class="mx-auto text-center" style="width: 70%;">
+			<h2 class="text-center mb-3">MakeMixフレーバー</h2>
+			<form method="post" action="/makeMix" >
+				<table class="table table-striped">
+					<tr><td><label for="name">名前</label></td>
+						<td><input type = "text" name = "name" />
+						</td>
+					</tr>
+					<tr><td>ジャンル</td>
+					<td>
+					<select id = "select1" name = "genre" size = "1">
+						<option value = "カクテル">カクテル系</option>
+						<option value = "スパイス">スパイス系</option>
+						<option value = "フルーツ">フルーツ系</option>
+						<option value = "カクテルっぽい">カクテル系っぽい</option>
+						<option value = "フルーツっぽい">フルーツ系っぽい</option>
+						<option value = "スパイスっぽい">スパイス系っぽい</option>
+					</select>
+					</td></tr>
+					<tr><td><label for="value">金額</label></td>
+						<td><input type = "text" name = "value" th:value="${total}" readonly/>
+					</td></tr>
+					<tr><td><label for="cons">構成</label></td>
+						<td><input type = "text" name = "cons" th:value ="${consname}" readonly/>
+					</td></tr>
+					<tr><td><label for="serve">作成者</label></td>
+						<td><input type = "text" name = "serve" th:value = "${loginUser.name}" readonly/>
+					</td></tr>
+					<tr><td><label for="exp">説明</label></td>
+						<td><textarea name = "exp" th:text  = "exp"
+						cols="20" rows="5"></textarea></td></tr>
+					<tr><td></td><td><input type = "submit" />送信</td></tr>
+				</table>
+			</form>
+  		</div>
+  	</div>-->
 </body>
 </html>

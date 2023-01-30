@@ -10,36 +10,23 @@
 <script src="/js/hover.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/Shisha/kussyon7">TOP</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-    <li class="nav-item">
-    <button type="button" onclick=history.back()>戻る</button>
-     </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/Shisha/Kussyon">系統選択</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/Shisha/Logout">ログアウト</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/Shisha/NewServlet">新規会員登録</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/Shisha/History">購入履歴</a>
-      </li>
-      
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+  	<ul class="header-nav-list">
+    	<li class="header-nav-item" id = "toggle">
+    	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      	<span class="navbar-toggler-icon"></span>
+    	</button> 
+    <ul class="toggle-list">
+         <li><a href="/men">FLAVOR</a></li>
+         <li><a href="/menMix">MIXFLAVOR</a></li>
+         <li><a href="/logout">logout</a></li>
+         <li><a href="/change">会員情報変更</a></li>
+    </ul>
+    	</li>
     </ul>
   </div>
 </nav>
-
-
-
-
 <div class="koi">
 <form id = "form1" method="post" action ="/SearchMix">
 	<select id = "sel" name = "select1" size = "1">
@@ -56,9 +43,8 @@
 </form>
 	
 	<br>
-	<form action="/check" method="post">
-	<button type="submit" class="btn btn-primary">カートにいれる</button>
 	
+	<a th:href="check" class="btn btn-tag"><i class="fas fa-shopping-cart"></i>カートを見る</a>	
 	<table class="mention-list2" id="mention-list2">	
   		
 	</table>
@@ -81,9 +67,8 @@
 		<tbody>
 		<tr th:each="obj : ${datalist}">
 		
-			 	<td><input type="checkbox" id= "ko" name="checkbox" th:value="${obj.id}">カートへ [[${obj.id}]]</td>
+			 	<td>[[${obj.id}]]</td>
 			 	<td>[[${obj.genre}]]</td>
-			 	<!--<td><a href="/home?id=${obj.name}">[[${obj.name}]]</a></td>-->
 			 	<td><a th:href="@{/home(id=${obj.id})}">[[${obj.name}]]</a></td>
 			 	<td class="l" th:data-id="${obj.id}">[[${obj.cons}]]</td>
 			 	<td>[[${obj.value}]]</td>
@@ -100,15 +85,22 @@
 			
 		</tbody>
 	</table>
-	<input type ="hidden" name ="mix" value ="${datalist}">
+	
 	
 	<br>
 	<br>
 	
 	
-	</form>
+	
 	
 	
 </div>
+<div class="news">
+  <a href="check">カート<span class="notice" 
+  >[[${loginUser.number}]]
+  </span></a>
+</div>
+
+
 </body>
 </html>

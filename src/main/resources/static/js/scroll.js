@@ -53,3 +53,79 @@ $('#form1').submit();
 });
 });
 
+
+/*$(function(){
+$("#bc").on("click", function(){
+	var k = "koo";
+	console.log(k);
+	let id = $(this).data('id')
+	console.log(id);
+	$.ajax({
+      	url: "/makeMixA",  // リクエストを送信するURLを指定（action属性のurlを抽出）
+      	type: "POST",  // HTTPメソッドを指定（デフォルトはGET）
+      	data: {
+        id: id // 送信データ
+        },
+      	datatype : "json"
+    })
+    
+    	.done(function(data) {
+	var g = "goo";
+	console.log(g);
+			var data_stringify = JSON.stringify(data);
+      		var data_json = JSON.parse(data_stringify);
+        	$.each(data_json, function(index, val) {
+    			//$("#mention-list2").append("<tr><td><img src='/img/"+ val.id +".jpg'height='50px'width='68px'></td><td>"+ val.name +"</td><td>ジャンル : "+ val.genre +"</td><td>  価格   : "+ val.value +"円(税込み)</td>  <td>made for : "+ val.maker +"</td></tr>");
+  		    });
+  		    //$("#mention-list2").stop(true,true).fadeToggle();
+		})
+		.fail(function(XMLHttpRequest, textStatus, errorThrown) {
+      		alert("error!");  // 通信に失敗した場合の処理
+      		console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+    		console.log("textStatus     : " + textStatus);
+    		console.log("errorThrown    : " + errorThrown.message);
+    	});
+})
+.mouseout(function() {
+	let id = $(this).data('id')
+ console.log("マウスアウト"+ id);
+   $('#mention-list2').find('tr').remove();
+   $("#mention-list2").fadeToggle();
+});
+});*/
+
+
+$(function(){
+    $('#for').on('click', function() {
+        var checks=[];
+        $("[name='checkbox']:checked").each(function(){
+            checks.push(this.value);
+            console.log("選ばれたもの" + this.value);
+        });
+        console.log("json" + JSON.stringify(checks));
+        	$.ajax({    
+            	url: "/checks",
+            	type: "POST",
+            	data:  JSON.stringify(checks),
+                contentType: 'application/json',
+            	datatype : "json"
+            })
+            	.done(function(data) {
+	console.log("送ったのはString");
+	
+					//var data_stringify = JSON.stringify(data);
+      				//var data_json = JSON.parse(data_stringify);
+       				///$.each(data_json, function(index, val) {
+    					//$("#mention-list2").append("<tr><td><img src='/img/"+ val.id +".jpg'height='50px'width='68px'></td><td>"+ val.name +"</td><td>ジャンル : "+ val.genre +"</td><td>  価格   : "+ val.value +"円(税込み)</td>  <td>made for : "+ val.maker +"</td></tr>");
+    					console.log("json取得"+data);
+  	    			//});
+	    			
+				})
+				.fail(function(XMLHttpRequest, textStatus, errorThrown) {
+      				alert("error!");  // 通信に失敗した場合の処理
+   					console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+   					console.log("textStatus     : " + textStatus);
+   					console.log("errorThrown    : " + errorThrown.message);
+   				});
+		})
+})

@@ -1,3 +1,32 @@
+ul li a { 
+ display: block;
+ color: #333;
+ padding: 1px 0; 
+} 
+
+#toggle { 
+ position: relative;
+}
+
+.toggle-list { 
+ display: none;
+ width: 150px; 
+ border: 1px solid #a3a0a0; 
+ position: absolute; 
+ top: 60px;
+ left: 0;
+ background-color: #f8f9fa;
+} 
+
+.header-nav-list {
+ display: flex; 
+} 
+
+.header-nav-item:not(:first-child) {
+ margin-left: 30px; 
+}
+
+
 .koi {
 	text-align:center;
   	padding:20px 0;
@@ -16,3 +45,31 @@
 	font-size: 20px;    /* 文字サイズ指定 */
     color: #2196F3;     /* 文字色指定 */
 }
+
+
+
+
+.news {
+  /* ボタンっぽいデザインを入れる */
+  width: 70px;
+  padding: 3px 5px;
+  border: solid 1px #000;
+  border-radius: 5px;
+  position: relative; /* 基準値とする */
+}
+
+.news span {
+  position: absolute;     /* 相対位置に指定 */
+  top: -10px;             /* 表示位置を上から-10pxの位置にする */
+  left: calc(100% - 10px);/* 表示位置を右から内側に10pxの位置 */
+  color: #FFF;            /* 文字色を白に指定 */
+  font-weight: bold;      /* 太文字にする */
+  line-height: 20px;      /* 行の高さを指定 */
+  text-align: center;     /* 文字を中央揃えにする */
+  background: #E68031;    /* 背景色をオレンジに指定 */
+  border-radius: 10px;    /* line-heightの半分の角丸を指定 */
+  min-width: 20px;        /* 最低幅を指定 */
+  padding: 0 3px;         /* 左右に少しだけ余白を設定 */
+  box-sizing: border-box; /* 計算しやすいように */
+}
+

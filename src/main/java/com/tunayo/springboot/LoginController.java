@@ -146,6 +146,7 @@ public class LoginController {
 	@RequestMapping("/logout")
 	public ModelAndView loginOut(
 			ModelAndView mav) {
+		//session dataを消す処理が必要
 		loginUser.setLogin(false);
 		
 		mav.setViewName("login");
@@ -156,12 +157,8 @@ public class LoginController {
 	@RequestMapping("/changeUser")
 	public ModelAndView change(
 			ModelAndView mav) {
-		
-		
-			mav.setViewName("changeUser");
-			
-			//User use = (User) session.getAttribute("user");
 			mav.addObject("loginUser",loginUser);
+			mav.setViewName("changeUser");
 			return mav;
 		}
 			

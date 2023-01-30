@@ -3,6 +3,7 @@ package com.tunayo.springboot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -34,10 +36,13 @@ import com.tunayo.springboot.repositories.MyDataRepository3;
 import com.tunayo.springboot.repositories.MyDataRepository4;
 import com.tunayo.springboot.repositories.MyDataRepository5;
 import com.tunayo.springboot.repositories.MyDataRepository6;
+
+import lombok.Data;
+
 import com.tunayo.springboot.User;
 
 @Controller
-
+@Service
 public class WelcomeHome {
 	@Autowired
 	MyDataRepository repository;
@@ -91,12 +96,6 @@ public class WelcomeHome {
 				ModelAndView res = null;
 				if(!result.hasErrors()) {
 					repository2.saveAndFlush(mixflavor);
-					List<MixCart> miCart = loginUser.getCart().getList();
-					for(MixCart kk : miCart) {
-						String v = kk.getName();
-						System.out.println(v);
-					}
-					
 					String str2 = mixflavor.getCons();
 					
 					Cart cart = loginUser.getCart();
@@ -113,7 +112,6 @@ public class WelcomeHome {
 			        	int id = mixflavor.getId();
 			        	com.setFlavorid(gg.getId());
 			        	com.setMixid(id);
-			        	System.out.println(str4);
 			        	repository5.save(com);
 			        	//idは重複していないのに更新をかけられてしまう
 			        	
@@ -153,21 +151,34 @@ public class WelcomeHome {
 			for(int p : id) {
 				k.add(p);
 			}
-			for(int l : k) {
-				System.out.println(l);
-			}
 			for(int o : id) {
 				MixFlavor j = repository2.findById(o);
 				mix.add(j);
 				
 			}
 			mav.addObject("datalist",mix);
+			mav.addObject("loginUser",loginUser);
 			mav.addObject("buy",buy);
 			mav.setViewName("buyView");
 			
 			return mav;
 		}
 		
+		@RequestMapping(value = "/check",method = RequestMethod.GET)
+
+		public ModelAndView checking(
+				ModelAndView mav) {
+			Cart cart = loginUser.getCart();
+			List<MixCart> mixCart = cart.getList();
+			int total = loginUser.getTotal();
+			loginUser.setNumber(mixCart.size());
+			mav.addObject("datalist",mixCart);
+			mav.addObject("total",total);
+			mav.addObject("loginUser",loginUser);
+			mav.setViewName("cart");
+			
+			return mav;
+		}
 		@RequestMapping(value = "/buy",method = RequestMethod.POST)
 
 		public ModelAndView made(
@@ -182,7 +193,6 @@ public class WelcomeHome {
 			if(k != null) {
 			
 			for(int u : k) {
-				System.out.println(u);
 				MixFlavor fla = repository2.findById(u);
 				MixCart mi = new MixCart();
 				mi.setName(fla.getName());
@@ -221,15 +231,44 @@ public class WelcomeHome {
 			List<MixCart> mixCart = cart.getList();
 			
 			int firstIndex = mixCart.indexOf(key);
-			System.out.println("この番号削除" + firstIndex+1);
 			int g = mixCart.get(firstIndex+1).getPrice();
 			int o = loginUser.getTotal();
 			mixCart.remove(firstIndex+1);
+			int e = loginUser.getNumber();
+			loginUser.setNumber(e-1);
 			loginUser.setTotal(o-g);
 			mav.addObject("datalist",mixCart);
 			
 			mav.addObject("loginUser",loginUser);
 			mav.setViewName("cart");
+			
+			
+			return mav;
+		}
+
+		@RequestMapping(value = "/getdown",method = RequestMethod.GET)
+
+		public ModelAndView mad(
+				@RequestParam("id")int id,
+				ModelAndView mav) {
+			Cart cart = loginUser.getCart();
+			List<MixCart> mixCart = cart.getList();
+			
+			MixFlavor ji = repository2.findById(id);
+			int value = ji.getValue();
+			String name = ji.getName();
+			MixCart fk = new MixCart(name,value);
+			mixCart.add(fk);
+			
+			cart.setList(mixCart);
+			int total = loginUser.getTotal();
+			loginUser.setNumber(mixCart.size());
+			loginUser.setTotal(total + ji.getValue());
+			List<MixFlavor> popo  = repository2.findAll();
+			mav.addObject("datalist",popo);
+			
+			mav.addObject("loginUser",loginUser);
+			mav.setViewName("MixFlavor");
 			
 			
 			return mav;
@@ -361,6 +400,7 @@ public class WelcomeHome {
 	
 	 
 				Iterable<MixFlavor>list =  repository2.mix();
+				mav.addObject("loginUser",loginUser);
 				mav.addObject("datalist",list);		
 				return mav;
 				
@@ -429,20 +469,47 @@ public class WelcomeHome {
 		@RequestMapping(value = "/pop",method = RequestMethod.POST)
 		@ResponseBody// このIDはいわばミックスフレーバーのID
 		public List<Flavor> pop(@RequestParam String id) {
-			System.out.println(id);
 			int ido = Integer.parseInt(id);
 			List<Flavor> json = new ArrayList<Flavor>();
 			List<Composition> comp = repository5.findByMixid(ido);
-			System.out.println("ここ");
 			for(Composition o : comp) {
 				int a = o.getFlavorid();
 				Flavor ji = repository.findById(a);
 				json.add(ji);
-				System.out.println(ji + "ここまでは来てる");
 			}
 			return json;
 		}
 		
+		@RequestMapping(value = "/checks",method = RequestMethod.POST)
+		@ResponseBody// このIDはいわばフレーバーのID
+		public String checks(@RequestBody String[] checks) {
+			List<String> s = new ArrayList<String>();
+			System.out.println(checks);
+			for (String o : checks) {
+				int ol = Integer.parseInt(o);
+				Flavor fla = repository.findById(ol);
+				s.add(fla.getName());
+			}
+			
+			String jso = String.join(",", s);
+			String json = "{\"jso\":\"" + jso + "\"}";
+			
+			return json;
+		}
+		
+		@RequestMapping(value = "/makingmix",method = RequestMethod.POST)
+		@ResponseBody// このIDはいわばミックスフレーバーのID
+		public List<Flavor> popjj(@RequestParam String id) {
+			int ido = Integer.parseInt(id);
+			List<Flavor> json = new ArrayList<Flavor>();
+			List<Composition> comp = repository5.findByMixid(ido);
+			for(Composition o : comp) {
+				int a = o.getFlavorid();
+				Flavor ji = repository.findById(a);
+				json.add(ji);
+			}
+			return json;
+		}
 		
 		@RequestMapping(value = "/home",method = RequestMethod.GET)
 	    public ModelAndView mention(@RequestParam("id") Integer id
@@ -455,10 +522,8 @@ public class WelcomeHome {
 	
 		    List<Review> review = repository6.findAll();
 		    
-		    //null にならない
 		    if(review == null) {
 		    	mav.addObject("msg","表示するレビューが見つかりません");
-		    	 System.out.println("dgjdkgdjkgj");
 		    }else {
 		    	mav.addObject("reviewlist",review);
 		    }
@@ -466,12 +531,10 @@ public class WelcomeHome {
 	        for (String fruit : fruits) {
 	        	Flavor fl = repository.findByName(fruit);
 	        	flavor.add(fl);
-	        	System.out.println(flavor);
-	            System.out.println(fruit);
 	        }
+	        mav.addObject("loginUser",loginUser);
 	        mav.addObject("datalist",flavor);
-	        
-	        System.out.println(flavor);
+	        mav.addObject("id",id);
 			mav.setViewName("part");
 	        return mav;
 	    }
@@ -499,23 +562,78 @@ public class WelcomeHome {
 	        return mav;
 	    }
 		
+		@RequestMapping(value = "/changeReview",method = RequestMethod.GET)
+	    public ModelAndView showReviews(ModelAndView mav) {
+			
+			String name = loginUser.getName();
+			List<Review> rev = repository6.findByName(name);
+			mav.addObject("datalist",rev);
+			mav.setViewName("changeReviews");
+	        return mav;
+	    }
+		
+		
+		@Transactional
+		@RequestMapping(value = "/changingrev",method = RequestMethod.POST)
+	    public ModelAndView showRevs(ModelAndView mav,
+	    		@RequestParam("id") int[] id) {
+			String name = loginUser.getName();
+			List<Review> rev = new ArrayList<Review>();
+			for(int y : id) {
+				repository6.deleteById(y);
+				
+			}
+			List<Review> revw = repository6.findAll();
+			mav.addObject("datalist",revw);
+			mav.setViewName("changeReviews");
+	        return mav;
+	    }
+		
 		@RequestMapping(value = "/register",method = RequestMethod.POST)
 	    public ModelAndView reviews(
-	    		@RequestParam("star") String star,
-	    		@RequestParam("review") String reviews
-	    		,ModelAndView mav
-	    		,@ModelAttribute("formModel")Review review) {
+	    		//@RequestParam("name") String name,
+	    		@RequestParam("star") int star,
+	    		@RequestParam("review") String reviews,
+	    		@RequestParam("date") String date,
+	    		@RequestParam("fl") int id,
+	    		ModelAndView mav
+	    		) {
 			List<Review> rev = new ArrayList<Review>();
-			int stars = Integer.parseInt(star);
+			//int stars = Integer.parseInt(star);
+			MixFlavor part =  repository2.findById(id);
+			Review re = new Review();
+			re.setName(loginUser.getName());
+			re.setDate(date);
+			re.setId(loginUser.getId());
+			re.setStar(star);
+			re.setReview(reviews);
+			repository6.saveAndFlush(re);
+			rev.add(re);
 			
-			review.setId(loginUser.getId());
-			review.setStar(stars);
-			review.setReview(reviews);
+			List<Review> lolo = repository6.findAll();
 			
-			repository6.saveAndFlush(review);
-			rev.add(review);
+			String k = part.getCons();
+			List<Flavor> flavor = new ArrayList<Flavor>();
+	
+		    List<Review> review = repository6.findAll();
+		    
+		    if(review == null) {
+		    	mav.addObject("msg","表示するレビューが見つかりません");
+		    }else {
+		    	mav.addObject("reviewlist",review);
+		    }
+			String[] fruits = k.split(",");
+	        for (String fruit : fruits) {
+	        	Flavor fl = repository.findByName(fruit);
+	        	flavor.add(fl);
+	        }
+	        
+	        mav.addObject("datalist",flavor);
 			mav.addObject(rev);
-			mav.setViewName("makeReview");
+			mav.addObject("mention",part);
+			mav.addObject("reviewlist",lolo);
+			mav.addObject("loginUser",loginUser);
+			mav.setViewName("part");
 	        return mav;
 	    }
 

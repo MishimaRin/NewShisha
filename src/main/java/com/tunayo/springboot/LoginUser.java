@@ -31,11 +31,13 @@ public class LoginUser {
 	private Cart cart;
 	private int total;
 	private List<Integer>count;
+	private int number;
 	
 	public LoginUser() {
 		this.cart = new Cart();
-		total=0;
+		this.total=0;
 		this.count = new ArrayList<Integer>();
+		this.number = 0;
 	}
 	
 	

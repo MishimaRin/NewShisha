@@ -14,7 +14,6 @@
 } 
 
 .mention-list2 { 
- display: none;
  width: 420px; 
  border: 1px solid #a3a0a0; 
  position: absolute; 
@@ -68,7 +67,7 @@ ul li a {
  position: relative;
 }
 
-.toggle-list { 
+.makemake { 
  display: none;
  width: 150px; 
  border: 1px solid #a3a0a0; 

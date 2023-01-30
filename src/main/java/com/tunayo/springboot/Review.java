@@ -31,6 +31,8 @@ public class Review {
 	@Column(nullable = false)
 	private Integer star;
 	
+	@Column(nullable = false)
+	private String date;
 	
 }
 
